@@ -1,0 +1,189 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Documentation &middot; PHP Pinger</title>
+    <meta name="author" content="Nicolas Devenet">
+    <link rel="stylesheet" href="assets/phppinger.css" />
+    <link rel="stylesheet" href="assets/highlight.default.css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:400,400italic,700|Source+Code+Pro:400,700" />
+    <link rel="shortcut icon" href="assets/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="57x57" href="assets/favicon/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/favicon/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/favicon/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/favicon/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="assets/favicon/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="assets/favicon/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/favicon/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="assets/favicon/apple-touch-icon-152x152.png">
+    <link rel="icon" type="image/png" href="assets/favicon/favicon-196x196.png" sizes="196x196">
+    <link rel="icon" type="image/png" href="assets/favicon/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="assets/favicon/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="assets/favicon/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="assets/favicon/favicon-32x32.png" sizes="32x32">
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="msapplication-TileImage" content="assets/favicon/mstile-144x144.png">
+    <meta name="msapplication-config" content="assets/favicon/browserconfig.xml">
+</head>
+<body>
+
+    <h1><a href="./"><img src="assets/phppinger.png" alt="Ping Pong" /> PHP Pinger</a> <br />Documentation</h1>
+    
+    <p class="summary">Summary<p>
+    <ul>
+        <li><a href="#include">Include library</a></li>
+        <li><a href="#instanciate">Create a new instance</a></li>
+        <li><a href="#host">Add host to be checked</a></li>
+        <li><a href="#run">Run the ping</a></li>
+        <li><a href="#callback">Register a callback function</a></li>
+        <li><a href="#pre-post-un">Register pre/post run callbacks</a></li>
+        <li><a href="#notifications">Notifications</a>
+            <ul>
+                <li><a href="#notifications-levels">Notifications levels</a></li>
+                <li><a href="#notifications-destinators">Set destinators to notify</a></li>
+                <li><a href="#notifications-enable">Enable notifications</a></li>
+                <li><a href="#notifications-disable">Disable notifications</a></li>
+                <li><a href="#notifications-preffix">Personalize the subject's preffix</a></li>
+                <li><a href="#notifications-signature">Add an e-mail signature</a></li>
+            </ul>
+        </li>
+        <li><a href="#tldr" title="Too Long; Didn't Read">TL;DR</a></li>
+    </ul>
+    
+    <h2 id="include">Include library</h2>
+    <pre><code>require 'phppinger.class.php';</code></pre>
+    
+    <h2 id="instanciate">Create a new instance</h2>
+    <pre><code>$ping = new PHP_Pinger();</code></pre>
+    
+    <h2 id="host">Add host to be checked</h2>
+    <p>The easy way:</p>
+    <pre><code>$ping->addHost('nicolabricot.com');</code></pre>
+    <p>You can also specified a port (default port is <code>80</code>):</p>
+    <pre><code>$ping->addHost('nicolabricot.com', 80);</code></pre>
+    <p>You can optionnaly add a sweety name (default label is the hostname):</p>
+    <pre><code>$ping->addHost('nicolabricot.com', 80, 'My blog');</code></pre>
+    <p>PHP Pinger use a socket to check if the host is online. It opens a socket at the given host and port, and if no error occures the conclusion is that the host or service is up.</p>
+    
+    <h2 id="run">Run the ping</h2>
+    <pre><code>$ping->run();</code></pre>
+    <p>Nothing display? Don't be worry: by default if no callback function is given, PHP Pinger will ping hosts but display nothing.
+    <br />To display the result, see next paragraph.</p>
+    <p>The <code>run()</code> method must be called at the end, otherwise other options will not be set.</p>
+    
+    <h2 id="callback">Register a callback function</h2>
+    <p>The callback function is called when a host has been pinged, that means the function is called for each host you added.</p>
+    <p>The callback function takes four parameters:</p>
+    <ul>
+        <li><code><strong>$online</strong></code> [boolean]
+            <br />TRUE if the host has been reached</li>
+        <li><code><strong>$host</strong></code> [string]
+            <br />hostname checked</li>
+        <li><code><strong>$port</strong></code> [int]
+            <br />port used to check the host</li>
+        <li><code><strong>$label</strong></code> [string]
+            <br />sweety name for the host</li>
+    </ul>
+    <pre><code>function myCallbackFunction($online, $host, $port, $label) {
+    // the callback you want, for example:
+    echo '&lt;li&gt;', $label, ' is ', ($online ? 'online' : 'offline'),
+        ' (', $host, ':', $port, ')', '&lt;/li&gt;';
+}</code></pre>
+    <p>Once definied, you have to add it to the created instance by:</p>
+    <pre><code>$ping->registerCallback('myCallbackFunction');</code></pre>
+    
+    <h2 id="pre-post-run">Register pre/post run callbacks</h2>
+    <p>Such as you registred the previous callback function, you can register a callback function executed before the run, and/or a callback function executed after the run:</p>
+    <pre><code>// register an action done before run:
+$ping->registerPreRun('myPreRunFunction');
+
+// register an action done after run:
+$ping->registerPostRun('myPostRunFunction');</code></pre>
+    <p>You can combine all callbacks:</p>
+    <pre><code>$ping->registerPreRun('myPreRun')
+    ->registerCallback('myCallback')
+    ->registerPostRun('myPostRun');</code></pre>
+    
+    <h2 id="notifications">Notifications</h2>
+    <p>If your web server can send e-mail, you can be notify by e-mail. Notifications are by default disable.</p>
+    
+    <h3 id="notifications-levels">Notifications levels</h3>
+    <p>Three levels of notifications are available:</p>
+    <ul>
+        <li><code><strong>NotificationLevel::NONE</strong></code>
+            <br />No notifications are sent (similar to disabled)</li>
+        <li><code><strong>NotificationLevel::PROBLEMS</strong></code>
+            <br />An e-mail is sent only if one or more hosts are down</li>
+        <li><code><strong>NotificationLevel::REPORT</strong></code>
+            <br />After each run, an e-mail is sent to report results</li>
+    </ul>
+    
+    <h3 id="notifications-destinators">Set destinators to notify</h3>
+    <p>To enable notifications, you have to add at least one destinator for e-mail:</p>
+    <pre><code>$ping->setNotificationTo(array('your-email@domain.tld'));</code></pre>
+    <p>Notifications could be sent to several e-mails:</p>
+    <pre><code>$ping->setNotificationTo(array(
+    'your-email@domain.tld',
+    'other-email@domain.tld',
+    'boss@domain.tld'
+));</code></pre>
+
+    <h3 id="notifications-enable">Enable notifications</h3>
+    <p>Just add the following line:</p>
+    <pre><code>$ping->enableNotification();</code></pre>
+    <p>By default, enabling notifications will set the level to <code>NotificationLevel::PROBLEMS</code>.
+        <br />You can specify another level, just add it as a parameter:</p>
+    <pre><code>// enable PROBLEMS level (similar to previous line)
+$ping->enableNotification(NotificationLevel::PROBLEMS);
+
+// enable REPORT level
+$ping->enableNotification(NotificationLevel::REPORT);</code></pre>
+
+    <h3 id="notifications-disable">Disable notifications</h3>
+    <p>You have two ways to do that:</p>
+    <pre><code>// dedicated method:
+$ping->disableNotification();
+
+// or use the level NONE:
+$ping->enableNotification(NotificationLevel::NONE);
+    </code></pre>
+    
+    <h3 id="notifications-preffix">Personalize the subject's preffix</h3>
+    <p>When an e-mail is sent, the default preffix is <em>Status</em>. You can change it with:</p>
+    <pre><code>$ping->setNotificationPreffix('Network Monitoring');</code></pre>
+    
+    <h3 id="notifications-signature">Add an e-mail signature</h3>
+    <p>To add a text at the end of the e-mail sent, just add:</p>
+    <pre><code>$ping->setNotificationSignature('--'.PHP_EOL.'By PHP Pinger');</code></pre>
+    
+    <h2 id="tldr">TL;DR</h2>
+    <pre><code>// load PHP Pinger
+require 'phppinger.class.php';
+
+/* callbacks for example */
+function callback($is_online, $hostname, $port, $sweety_name) {
+    echo '&lt;li&gt;', $hostname, ':', $port, ' is ',
+    ($is_online ? 'online' : 'offline'), '&lt;/li&gt;';
+}
+function preRun() { echo '&lt;ul&gt;', PHP_EOL; }
+function postRun() { echo '&lt;/ul&gt;', PHP_EOL; }
+
+/* instanciate a new Pinger and run it with callbacks and notifications */
+$ping = new PHP_Pinger();
+$ping->registerCallback('callback')
+    ->registerPreRun('preRun')
+    ->registerPostRun('postRun')
+    ->addHost('nicolabricot.com')
+    ->addHost('blog.nicolabricot.com', 80)
+    ->addHost('ftp.github.com', 21, 'GitHub FTP')
+    ->setNotificationTo(array('email@domain.tld', 'other-dude@domain.tld'))
+    ->setNotificationPreffix('Network Monitoring')
+    ->setNotificationSignature('--'.PHP_EOL.'By PHP Pinger')
+    ->enableNotification(NotificationLevel::REPORT)
+    ->run();</code></pre>
+    <p>You can combine methods as you want, except the <code>run()</code> method which must be at the end.</p>
+
+    <script src="assets/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

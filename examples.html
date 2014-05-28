@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Examples &middot; PHP Pinger</title>
+    <meta name="author" content="Nicolas Devenet">
+    <link rel="stylesheet" href="assets/phppinger.css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:400,400italic,700|Source+Code+Pro:400" />
+    <link rel="shortcut icon" href="assets/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="57x57" href="assets/favicon/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/favicon/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/favicon/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/favicon/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="assets/favicon/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="assets/favicon/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/favicon/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="assets/favicon/apple-touch-icon-152x152.png">
+    <link rel="icon" type="image/png" href="assets/favicon/favicon-196x196.png" sizes="196x196">
+    <link rel="icon" type="image/png" href="assets/favicon/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="assets/favicon/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="assets/favicon/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="assets/favicon/favicon-32x32.png" sizes="32x32">
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="msapplication-TileImage" content="assets/favicon/mstile-144x144.png">
+    <meta name="msapplication-config" content="assets/favicon/browserconfig.xml">
+</head>
+<body class="ex">
+
+    <h1><a href="./"><img src="assets/phppinger.png" alt="Ping Pong" /> PHP Pinger</a> <br />Examples</h1>
+    
+    <p class="summary">Summary<p>
+    <ul>
+        <li><a href="#email">E-Mail notifications</a></li>
+        <li><a href="#html">HTML output</a></li>
+    </ul>
+    
+    <h2 id="email">E-Mail notifications</h2>
+    <p>It's easy to run PHP Pinger to get by e-mail results of the run.
+        <br />Two levels are available: always send me a report, or e-mail me only if a host is down.</p>
+    <p>You can receive launch a run by visiting a webpage, or by making a CRON task.</p>
+    
+    <h3>Level: Problems</h3>
+    <p class="center images"><img src="images/phppinger_mail_offline.png" alt="PHP Pinger E-Mail Problems" /></p>
+    
+    <h3>Level: Report</h3>
+    <p class="center images"><img src="images/phppinger_mail_report.png" alt="PHP Pinger E-Mail Report" /></p>
+    
+    <p class="help">You can find those examples in <a href="https://github.com/nicolabricot/PHPPinger/blob/master/examples/example-cron.php"><code>example-cron.php</code></a> file!</p>
+    
+    <h2 id="html">HTML output</h2>
+    <p>With callback functions, you can display result of a run on a HTML page.
+        <br />HTML output is done with a callback function; You are free to format it how you want it.</p>
+    
+    <h3>Simple list example</h3>
+    <ul>
+    <li><abbr title="nicolabricot.com:80"><span>nicolabricot.com</span></abbr> &rsaquo; online</li>
+    <li><abbr title="github.com:443"><span>GitHub &lsaquo;3</span></abbr> &rsaquo; online</li>
+    <li><abbr title="help.github.com:443"><span>Help over HTTPS</span></abbr> &rsaquo; online</li>
+    <li><abbr title="ftp.github.com:21"><span>ftp.github.com</span></abbr> &rsaquo; <strong>offline</strong></li>
+    </ul>
+    
+    <h3>Table example</h3>
+    <table>
+    <tr><th>Label</th><th>host:port</th><th>Result</th></tr>
+    <tr class="on"><td>Google FR</td><td><code>google.fr:80</code></td><td>online</td></tr>
+    <tr class="on"><td>Google SSL</td><td><code>www.google.com:443</code></td><td>online</td></tr>
+    <tr class="off"><td>404.google.com</td><td><code>404.google.com:80</code></td><td><strong>offline</strong></td></tr>
+    <tr class="off"><td>SSH example</td><td><code>example.com:22</code></td><td><strong>offline</strong></td></tr>
+    <tr class="on"><td>Good example</td><td><code>example.com:80</code></td><td>online</td></tr>
+    </table>
+    
+    <p class="help">You can find those examples in <a href="https://github.com/nicolabricot/PHPPinger/blob/master/examples/example-html.php"><code>example-html.php</code></a> file!</p>
+    
+</body>
+</html>

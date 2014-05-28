@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>PHP Pinger</title>
+    <meta name="author" content="Nicolas Devenet">
+    <meta name="description" content="PHP Pinger is a light PHP library to check if an host is up or down.">
+    <link rel="stylesheet" href="assets/phppinger.css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:400,400italic,700|Source+Code+Pro:400" />
+    <link rel="shortcut icon" href="assets/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="57x57" href="assets/favicon/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/favicon/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/favicon/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/favicon/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="assets/favicon/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="assets/favicon/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/favicon/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="assets/favicon/apple-touch-icon-152x152.png">
+    <link rel="icon" type="image/png" href="assets/favicon/favicon-196x196.png" sizes="196x196">
+    <link rel="icon" type="image/png" href="assets/favicon/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="assets/favicon/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="assets/favicon/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="assets/favicon/favicon-32x32.png" sizes="32x32">
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="msapplication-TileImage" content="assets/favicon/mstile-144x144.png">
+    <meta name="msapplication-config" content="assets/favicon/browserconfig.xml">
+</head>
+<body>
+
+    <h1><a href="./"><img src="assets/phppinger.png" alt="Ping Pong" /> PHP Pinger</a></h1>
+    
+    <p class="description">PHP Pinger is a light PHP library to check if an host is up or down.</p>
+    <p>It uses a socket and can check any host on any port, one or multiple port, can send you an e-mail report, and you can customize it to display some results on a web page.</p>
+    
+    <h2>Where to begin?</h2>
+    <div class="main-links">
+        <a href="documentation.html">Documentation</a>
+        <a href="examples.html">Examples</a>
+        <a href="https://github.com/nicolabricot/PHPPinger/releases"><strong>Download</strong></a>
+        <a href="https://github.com/nicolabricot/PHPPinger/issues">Report an issue</a>
+    </div>
+    
+    <h2>Overview</h2>
+    <p>See the <a href="examples.html">examples</a> page to see more.</p>
+    <h3>HTML output example</h3>
+    <table class="ex">
+    <tr><th>Label</th><th>host:port</th><th>Result</th></tr>
+    <tr class="on"><td>Google FR</td><td><code>google.fr:80</code></td><td>online</td></tr>
+    <tr class="on"><td>Google SSL</td><td><code>www.google.com:443</code></td><td>online</td></tr>
+    <tr class="off"><td>404.google.com</td><td><code>404.google.com:80</code></td><td><strong>offline</strong></td></tr>
+    <tr class="off"><td>SSH example</td><td><code>example.com:22</code></td><td><strong>offline</strong></td></tr>
+    <tr class="on"><td>Good example</td><td><code>example.com:80</code></td><td>online</td></tr>
+    </table>
+    <h3>E-Mail report example</h3>
+    <p class="center images"><img src="images/phppinger_mail_report.png" alt="PHP Pinger E-Mail Report" /></p>
+    
+    <h2>Contribute!</h2>
+    <p>Source code is hosted on <a href="https://github.com/nicolabricot/PHPPinger">Github</a> by <a href="http://nicolabricot.com">nicolabricot</a>.
+        <br />Fell free to fork it, improve it, and do a pull request :)</p>
+    
+</body>
+</html>
