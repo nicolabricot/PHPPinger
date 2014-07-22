@@ -27,7 +27,7 @@ function executePing() {
     // Run a first instance
     $app = new PHP_Pinger();
     // set e-mail destinators with an array
-    $app->setNotificationTo(array('nicolas@devenet.info', 'contact@nicolabricot.com'));
+    $app->setNotificationTo(array('email@domain.tld', 'other-dude@example.com'));
     // you can change the subjects preffix
     $app->setNotificationPreffix('Network Monitoring');
     // you can add a signature at the end of the sent e-mail

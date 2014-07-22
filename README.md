@@ -37,4 +37,4 @@ $ping->registerCallback('callback')
 
 The documentation is available on [nicolabricot.github.io/PHPPinger](http://nicolabricot.github.io/PHPPinger/documentation.html).
 
-You can find some examples on `examples\`.
+You can find some examples on the `examples` folder.
