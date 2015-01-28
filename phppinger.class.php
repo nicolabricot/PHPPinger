@@ -21,7 +21,7 @@ class Host {
 
     const TIMEOUT_DEFAULT = 5;
     
-    public function __construct($host, $port, $label = NULL) {
+    public function __construct($host, $port = 0, $label = NULL) {
         $this->host = $host;
         $this->port = $port;
         $this->label = $label != NULL ? $label : $host;
@@ -40,10 +40,19 @@ class Host {
     
     public function check() {
         if (!empty($this->host)) {
-            if ($socket = @fsockopen($this->host, $this->port, $errno, $errstr, self::TIMEOUT_DEFAULT)) {
-                fclose($socket);
-                $this->online = TRUE;
-                return TRUE;
+            if ($this->port != 0) {
+                if ($socket = @fsockopen($this->host, $this->port, $errno, $errstr, self::TIMEOUT_DEFAULT)) {
+                    fclose($socket);
+                    $this->online = TRUE;
+                    return TRUE;
+                }
+            }
+            else{
+                $ping = exec('ping -c 1 '.$this->host.' | grep loss');
+                if(!ereg("100% packet loss", $ping)){
+                    $this->online = TRUE;
+                    return TRUE;
+                }
             }
         }
         $this->online = FALSE;
@@ -109,7 +118,7 @@ class PHP_Pinger {
         return $this;
     }
     
-    public function addHost($host, $port = 80, $label = NULL) {
+    public function addHost($host, $port = 0, $label = NULL) {
         $this->hosts[] = new Host($host, $port, $label);
         return $this;
     }
