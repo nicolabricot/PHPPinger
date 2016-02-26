@@ -48,7 +48,7 @@ class Host {
                 }
             }
             else{
-                $ping = exec('ping -c 1 '.$this->host.' | grep loss');
+                $ping = exec('ping -c 1 -W 1 '.$this->host.' | grep loss');
                 if(!preg_match("/100% packet loss/", $ping)){
                     $this->online = TRUE;
                     return TRUE;
