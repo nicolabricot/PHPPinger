@@ -45,7 +45,7 @@ function executePing() {
     // An other instance to check some hosts
     $cat = new PHP_Pinger();
     $cat->enableNotification(NotificationLevel::PROBLEMS)
-        ->setNotificationTo(array('nicolas@devenet.info'))
+        ->setNotificationTo(array('email@domain.tld'))
         ->addHost('google.fr', 80, 'Google FR')
         ->addHost('www.google.com', 443, 'Google SSL')
         ->addHost('404.google.com')
